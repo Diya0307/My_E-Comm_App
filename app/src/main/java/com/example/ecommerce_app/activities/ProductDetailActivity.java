@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     ActivityProductDetailBinding binding;
     Product currentProduct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("name");
         String image = getIntent().getStringExtra("image");
+
         int id = getIntent().getIntExtra("id",0);
         double price = getIntent().getDoubleExtra("price",0);
         Glide.with(this)
@@ -50,7 +53,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         getProductDetails(id);
         Objects.requireNonNull(getSupportActionBar()).setTitle(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        binding.productDescription.setMovementMethod(new ScrollingMovementMethod());
         Cart cart = TinyCartHelper.getCart();
         binding.addToCart.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
